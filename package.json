@@ -1,0 +1,15 @@
+{
+  "name": "shopthai",
+  "version": "1.0.0",
+  "description": "ร้านค้าออนไลน์พร้อมระบบหลังบ้าน บน Cloudflare Workers + D1",
+  "private": true,
+  "scripts": {
+    "dev": "wrangler dev",
+    "deploy": "wrangler deploy",
+    "db:init": "wrangler d1 execute shopthai-db --file=./schema.sql",
+    "db:init:remote": "wrangler d1 execute shopthai-db --remote --file=./schema.sql"
+  },
+  "devDependencies": {
+    "wrangler": "^4.20.0"
+  }
+}

@@ -1,0 +1,20 @@
+# dependencies
+node_modules/
+
+# wrangler / cloudflare
+.wrangler/
+.dev.vars
+.dev.vars.*
+dist/
+
+# local sqlite (ถ้ามี)
+*.db
+*.db-shm
+*.db-wal
+
+# logs / os
+*.log
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/

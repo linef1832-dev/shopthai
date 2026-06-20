@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ShopThai — ร้านค้าออนไลน์</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🛍️</text></svg>" />
+  <link rel="stylesheet" href="/style.css" />
+</head>
+<body>
+  <header class="nav">
+    <div class="container nav-inner">
+      <a href="/" class="logo">🛍️ ShopThai</a>
+      <div class="nav-actions">
+        <input id="search" class="search" type="search" placeholder="ค้นหาสินค้า…" />
+        <a href="/admin.html" class="link-admin">หลังบ้าน</a>
+        <button id="cartBtn" class="cart-btn" aria-label="ตะกร้าสินค้า">
+          🛒 <span id="cartCount" class="badge">0</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <section class="hero">
+    <div class="container">
+      <h1>ช้อปง่าย ส่งไว ของแท้ 100%</h1>
+      <p>เลือกซื้อสินค้าคุณภาพในราคาที่คุณจับต้องได้</p>
+    </div>
+  </section>
+
+  <main class="container">
+    <div class="filters" id="categories"></div>
+    <div id="productGrid" class="grid"></div>
+    <p id="empty" class="empty" hidden>ไม่พบสินค้าที่ค้นหา</p>
+  </main>
+
+  <!-- ตะกร้าสินค้า -->
+  <div id="cartOverlay" class="overlay" hidden></div>
+  <aside id="cartDrawer" class="drawer" hidden aria-label="ตะกร้าสินค้า">
+    <div class="drawer-head">
+      <h2>ตะกร้าสินค้า</h2>
+      <button id="closeCart" class="icon-btn" aria-label="ปิด">✕</button>
+    </div>
+    <div id="cartItems" class="cart-items"></div>
+    <div class="cart-foot">
+      <div class="cart-total"><span>รวมทั้งหมด</span><strong id="cartTotal">฿0</strong></div>
+      <button id="checkoutBtn" class="btn btn-primary btn-block">สั่งซื้อ</button>
+    </div>
+  </aside>
+
+  <!-- ฟอร์มสั่งซื้อ -->
+  <div id="checkoutModal" class="modal" hidden>
+    <div class="modal-card">
+      <h2>ข้อมูลการจัดส่ง</h2>
+      <form id="checkoutForm">
+        <label>ชื่อผู้รับ<input name="name" required /></label>
+        <label>เบอร์โทร<input name="phone" required inputmode="tel" /></label>
+        <label>ที่อยู่จัดส่ง<textarea name="address" rows="3" required></textarea></label>
+        <label>หมายเหตุ (ถ้ามี)<input name="note" /></label>
+        <div class="modal-actions">
+          <button type="button" id="cancelCheckout" class="btn">ยกเลิก</button>
+          <button type="submit" class="btn btn-primary">ยืนยันสั่งซื้อ</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <div id="toast" class="toast" hidden></div>
+
+  <footer class="footer">
+    <div class="container">© 2026 ShopThai — ตัวอย่างร้านค้าออนไลน์บน Cloudflare Workers + D1</div>
+  </footer>
+
+  <script src="/app.js"></script>
+</body>
+</html>

@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ShopThai — ระบบหลังบ้าน</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🛠️</text></svg>" />
+  <link rel="stylesheet" href="/admin.css" />
+</head>
+<body>
+  <!-- ---------- หน้าเข้าสู่ระบบ ---------- -->
+  <div id="loginView" class="login-wrap">
+    <form id="loginForm" class="login-card">
+      <div class="login-logo">🛠️</div>
+      <h1>ระบบหลังบ้าน</h1>
+      <p class="login-sub">ShopThai Admin</p>
+      <label>รหัสผ่าน
+        <input id="loginPw" type="password" placeholder="กรอกรหัสผ่านแอดมิน" required />
+      </label>
+      <button type="submit" class="btn btn-primary btn-block">เข้าสู่ระบบ</button>
+      <p id="loginErr" class="login-err" hidden></p>
+      <a href="/" class="back-link">← กลับไปหน้าร้าน</a>
+    </form>
+  </div>
+
+  <!-- ---------- แดชบอร์ด ---------- -->
+  <div id="dashView" hidden>
+    <header class="admin-nav">
+      <div class="admin-nav-inner">
+        <span class="admin-logo">🛠️ ShopThai Admin</span>
+        <nav class="tabs">
+          <button class="tab active" data-tab="products">สินค้า</button>
+          <button class="tab" data-tab="orders">คำสั่งซื้อ</button>
+        </nav>
+        <div class="admin-right">
+          <a href="/" class="link-muted" target="_blank">เปิดหน้าร้าน ↗</a>
+          <button id="logoutBtn" class="btn btn-sm">ออกจากระบบ</button>
+        </div>
+      </div>
+    </header>
+
+    <main class="admin-main">
+      <!-- สถิติ -->
+      <section class="stats" id="stats"></section>
+
+      <!-- แท็บสินค้า -->
+      <section id="tab-products" class="tab-panel">
+        <div class="panel-head">
+          <h2>จัดการสินค้า</h2>
+          <button id="newProductBtn" class="btn btn-primary">+ เพิ่มสินค้า</button>
+        </div>
+        <div class="table-wrap">
+          <table class="data-table">
+            <thead>
+              <tr><th>สินค้า</th><th>หมวดหมู่</th><th>ราคา</th><th>สต็อก</th><th></th></tr>
+            </thead>
+            <tbody id="productRows"></tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- แท็บคำสั่งซื้อ -->
+      <section id="tab-orders" class="tab-panel" hidden>
+        <div class="panel-head"><h2>คำสั่งซื้อทั้งหมด</h2></div>
+        <div id="orderList" class="order-list"></div>
+      </section>
+    </main>
+  </div>
+
+  <!-- ---------- ฟอร์มสินค้า (Modal) ---------- -->
+  <div id="productModal" class="modal" hidden>
+    <div class="modal-card">
+      <h2 id="productModalTitle">เพิ่มสินค้า</h2>
+      <form id="productForm">
+        <input type="hidden" name="id" />
+        <label>ชื่อสินค้า<input name="name" required /></label>
+        <label>รายละเอียด<textarea name="description" rows="2"></textarea></label>
+        <div class="form-row">
+          <label>ราคา (บาท)<input name="price" type="number" min="0" step="1" required /></label>
+          <label>สต็อก<input name="stock" type="number" min="0" step="1" value="0" /></label>
+        </div>
+        <div class="form-row">
+          <label>หมวดหมู่<input name="category" placeholder="เช่น เสื้อผ้า" /></label>
+          <label>รูป (อีโมจิ หรือ URL)<input name="image" placeholder="👕 หรือ https://…" /></label>
+        </div>
+        <div class="modal-actions">
+          <button type="button" id="cancelProduct" class="btn">ยกเลิก</button>
+          <button type="submit" class="btn btn-primary">บันทึก</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <div id="toast" class="toast" hidden></div>
+  <script src="/admin.js"></script>
+</body>
+</html>
