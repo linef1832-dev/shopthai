@@ -10,6 +10,8 @@
   --radius: 12px;
 }
 * { box-sizing: border-box; }
+/* ทำให้ attribute hidden ซ่อน element ได้เสมอ แม้จะมี display อื่นกำหนดไว้ */
+[hidden] { display: none !important; }
 body {
   margin: 0; background: var(--bg); color: var(--text);
   font-family: "Segoe UI", "Sarabun", "Noto Sans Thai", system-ui, sans-serif;

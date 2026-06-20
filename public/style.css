@@ -12,6 +12,8 @@
 }
 
 * { box-sizing: border-box; }
+/* ทำให้ attribute hidden ซ่อน element ได้เสมอ แม้จะมี display อื่นกำหนดไว้ */
+[hidden] { display: none !important; }
 html { scroll-behavior: smooth; }
 body {
   margin: 0;
