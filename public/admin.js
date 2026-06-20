@@ -74,6 +74,7 @@ document.querySelectorAll(".tab").forEach((t) =>
     document.querySelectorAll(".tab").forEach((x) => x.classList.remove("active"));
     t.classList.add("active");
     const tab = t.dataset.tab;
+    $("#tab-dashboard").hidden = tab !== "dashboard";
     $("#tab-products").hidden = tab !== "products";
     $("#tab-orders").hidden = tab !== "orders";
   }));
@@ -85,6 +86,47 @@ let ordersCache = [];
 async function loadAll() {
   await Promise.all([loadProducts(), loadOrders()]);
   renderStats();
+  renderDashboard();
+}
+
+function renderDashboard() {
+  // ยอดขาย 7 วันล่าสุด
+  const now = new Date();
+  const days = [];
+  for (let i = 6; i >= 0; i--) {
+    const d = new Date(now);
+    d.setDate(now.getDate() - i);
+    const key = d.toISOString().slice(0, 10);
+    const total = ordersCache
+      .filter((o) => o.status !== "cancelled" && (o.createdAt || "").slice(0, 10) === key)
+      .reduce((s, o) => s + o.total, 0);
+    days.push({ label: d.toLocaleDateString("th-TH", { day: "numeric", month: "short" }), total });
+  }
+  const max = Math.max(1, ...days.map((d) => d.total));
+  $("#salesChart").innerHTML = days.map((d) => `
+    <div class="bar-col">
+      <div class="bar-val">${d.total ? "฿" + d.total.toLocaleString("th-TH") : ""}</div>
+      <div class="bar" style="height:${Math.max(2, Math.round((d.total / max) * 100))}%"></div>
+      <div class="bar-label">${d.label}</div>
+    </div>`).join("");
+
+  // สถานะคำสั่งซื้อ
+  const statuses = ["pending", "paid", "shipped", "completed", "cancelled"];
+  const maxS = Math.max(1, ...statuses.map((s) => ordersCache.filter((o) => o.status === s).length));
+  $("#statusChart").innerHTML = statuses.map((s) => {
+    const c = ordersCache.filter((o) => o.status === s).length;
+    return `<div class="sb-row">
+      <span class="sb-label">${STATUS_LABEL[s]}</span>
+      <div class="sb-track"><div class="sb-fill f-${s}" style="width:${Math.round((c / maxS) * 100)}%"></div></div>
+      <span class="sb-count">${c}</span>
+    </div>`;
+  }).join("");
+
+  // สินค้าใกล้หมด
+  const low = productsCache.filter((p) => p.stock <= 5).sort((a, b) => a.stock - b.stock);
+  $("#lowStock").innerHTML = low.length
+    ? low.map((p) => `<div class="ls-row"><span>${p.name}</span><span class="${p.stock <= 0 ? "ls-out" : "ls-low"}">${p.stock} ชิ้น</span></div>`).join("")
+    : `<p class="muted">ไม่มีสินค้าใกล้หมด ทุกอย่างพร้อมขาย 👍</p>`;
 }
 
 function renderStats() {

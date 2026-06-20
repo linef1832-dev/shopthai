@@ -187,6 +187,17 @@ async function handleApi(request, env, path) {
       return json({ id: oid, createdAt: created, customer: cust, items: orderItems, total, status: "pending" }, 201);
     }
 
+    // ติดตามสถานะออเดอร์ (สาธารณะ) ด้วยเลขที่ออเดอร์ — ไม่คืนข้อมูลส่วนตัวเต็ม
+    if (method === "GET" && id) {
+      const r = await db.prepare("SELECT * FROM orders WHERE id=?").bind(id).first();
+      if (!r) return json({ error: "ไม่พบคำสั่งซื้อนี้ ตรวจสอบเลขที่ออเดอร์อีกครั้ง" }, 404);
+      const o = orderRow(r);
+      return json({
+        id: o.id, createdAt: o.createdAt, items: o.items,
+        total: o.total, status: o.status, customerName: o.customer?.name || "",
+      });
+    }
+
     // ต่อจากนี้ต้องเป็นแอดมิน
     if (!isAdmin()) return json({ error: "ไม่ได้รับอนุญาต กรุณาเข้าสู่ระบบ" }, 401);
 

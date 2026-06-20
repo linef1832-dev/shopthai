@@ -8,11 +8,21 @@
   <link rel="stylesheet" href="/style.css" />
 </head>
 <body>
+  <!-- แถบประกาศ -->
+  <div class="topbar">🚚 ส่งฟรีเมื่อสั่งครบ ฿1,000 · 🎉 สมาชิกใหม่รับส่วนลดทันที</div>
+
   <header class="nav">
     <div class="container nav-inner">
-      <a href="/" class="logo">🛍️ ShopThai</a>
+      <a href="#" class="logo" data-go="home">🛍️ ShopThai</a>
+      <nav class="menu" id="menu">
+        <a href="#" class="menu-link active" data-go="home">หน้าแรก</a>
+        <a href="#products" class="menu-link" data-go="products">สินค้า</a>
+        <a href="#" class="menu-link" data-open="track">เช็คสถานะออเดอร์</a>
+        <a href="#" class="menu-link" data-open="about">เกี่ยวกับเรา</a>
+      </nav>
       <div class="nav-actions">
         <input id="search" class="search" type="search" placeholder="ค้นหาสินค้า…" />
+        <button id="themeBtn" class="icon-pill" title="สลับโหมดสว่าง/มืด">🌙</button>
         <a href="/admin.html" class="link-admin">หลังบ้าน</a>
         <button id="cartBtn" class="cart-btn" aria-label="ตะกร้าสินค้า">
           🛒 <span id="cartCount" class="badge">0</span>
@@ -21,15 +31,24 @@
     </div>
   </header>
 
-  <section class="hero">
+  <section class="hero" id="home">
     <div class="container">
       <h1>ช้อปง่าย ส่งไว ของแท้ 100%</h1>
       <p>เลือกซื้อสินค้าคุณภาพในราคาที่คุณจับต้องได้</p>
+      <a href="#products" class="btn btn-light" data-go="products">เลือกซื้อเลย ↓</a>
     </div>
   </section>
 
-  <main class="container">
-    <div class="filters" id="categories"></div>
+  <main class="container" id="products">
+    <div class="toolbar">
+      <div class="filters" id="categories"></div>
+      <select id="sort" class="sort">
+        <option value="new">เรียง: ใหม่ล่าสุด</option>
+        <option value="price-asc">ราคา: ต่ำ → สูง</option>
+        <option value="price-desc">ราคา: สูง → ต่ำ</option>
+        <option value="name">ชื่อ: ก-ฮ</option>
+      </select>
+    </div>
     <div id="productGrid" class="grid"></div>
     <p id="empty" class="empty" hidden>ไม่พบสินค้าที่ค้นหา</p>
   </main>
@@ -48,6 +67,29 @@
     </div>
   </aside>
 
+  <!-- รายละเอียดสินค้า -->
+  <div id="detailModal" class="modal" hidden>
+    <div class="modal-card detail-card">
+      <button id="closeDetail" class="modal-x" aria-label="ปิด">✕</button>
+      <div class="detail-img" id="detailImg"></div>
+      <div class="detail-info">
+        <span class="card-cat" id="detailCat"></span>
+        <h2 id="detailName"></h2>
+        <p id="detailDesc" class="detail-desc"></p>
+        <div class="detail-price" id="detailPrice"></div>
+        <div id="detailStock" class="detail-stock"></div>
+        <div class="detail-actions">
+          <div class="qty">
+            <button id="detailMinus">−</button>
+            <span id="detailQty">1</span>
+            <button id="detailPlus">+</button>
+          </div>
+          <button id="detailAdd" class="btn btn-primary">เพิ่มลงตะกร้า</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <!-- ฟอร์มสั่งซื้อ -->
   <div id="checkoutModal" class="modal" hidden>
     <div class="modal-card">
@@ -65,10 +107,56 @@
     </div>
   </div>
 
+  <!-- เช็คสถานะออเดอร์ -->
+  <div id="trackModal" class="modal" hidden>
+    <div class="modal-card">
+      <button id="closeTrack" class="modal-x" aria-label="ปิด">✕</button>
+      <h2>📦 เช็คสถานะออเดอร์</h2>
+      <p class="muted-text">กรอกเลขที่ออเดอร์ที่ได้รับตอนสั่งซื้อ (ขึ้นต้นด้วย <code>o_</code>)</p>
+      <form id="trackForm">
+        <label>เลขที่ออเดอร์<input name="oid" placeholder="o_xxxxxxxxxxxx" required /></label>
+        <button type="submit" class="btn btn-primary btn-block">ตรวจสอบ</button>
+      </form>
+      <div id="trackResult" class="track-result"></div>
+    </div>
+  </div>
+
+  <!-- เกี่ยวกับเรา -->
+  <div id="aboutModal" class="modal" hidden>
+    <div class="modal-card">
+      <button id="closeAbout" class="modal-x" aria-label="ปิด">✕</button>
+      <h2>เกี่ยวกับ ShopThai</h2>
+      <p>ร้านค้าออนไลน์ที่คัดสรรสินค้าคุณภาพในราคาที่เป็นมิตร พร้อมบริการจัดส่งทั่วประเทศ 🇹🇭</p>
+      <ul class="about-list">
+        <li>✅ สินค้าของแท้ 100%</li>
+        <li>🚚 จัดส่งรวดเร็ว เก็บเงินปลายทางได้</li>
+        <li>💬 ติดต่อเรา: Line @shopthai · โทร 02-000-0000</li>
+        <li>🕐 เปิดบริการทุกวัน 9:00 - 21:00 น.</li>
+      </ul>
+    </div>
+  </div>
+
   <div id="toast" class="toast" hidden></div>
 
   <footer class="footer">
-    <div class="container">© 2026 ShopThai — ตัวอย่างร้านค้าออนไลน์บน Cloudflare Workers + D1</div>
+    <div class="container footer-grid">
+      <div>
+        <div class="logo">🛍️ ShopThai</div>
+        <p class="muted-text">ร้านค้าออนไลน์ของแท้ ส่งไว ทั่วไทย</p>
+      </div>
+      <div>
+        <h4>เมนู</h4>
+        <a href="#" data-go="home">หน้าแรก</a>
+        <a href="#products" data-go="products">สินค้า</a>
+        <a href="#" data-open="track">เช็คสถานะออเดอร์</a>
+        <a href="#" data-open="about">เกี่ยวกับเรา</a>
+      </div>
+      <div>
+        <h4>ติดต่อ</h4>
+        <p class="muted-text">Line: @shopthai<br />โทร: 02-000-0000<br />เปิด 9:00–21:00 น.</p>
+      </div>
+    </div>
+    <div class="footer-bar">© 2026 ShopThai — รันบน Cloudflare Workers + D1</div>
   </footer>
 
   <script src="/app.js"></script>

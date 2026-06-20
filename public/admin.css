@@ -131,5 +131,40 @@ a { text-decoration: none; color: inherit; }
 @media (max-width: 560px) {
   .form-row { grid-template-columns: 1fr; }
   .tabs { gap: 0; }
-  .tab { padding: 8px 10px; }
+  .tab { padding: 8px 8px; font-size: 0.82rem; }
 }
+
+/* ========== แดชบอร์ด ========== */
+.dash-grid { display: grid; grid-template-columns: 1.4fr 1fr; gap: 16px; }
+.dash-card { background: #fff; border-radius: var(--radius); box-shadow: var(--shadow); padding: 20px; }
+.dash-card h3 { margin: 0 0 18px; font-size: 1rem; }
+.muted { color: var(--muted); font-size: 0.9rem; }
+
+/* กราฟแท่งยอดขาย */
+.chart { display: flex; align-items: flex-end; gap: 10px; height: 180px; }
+.bar-col { flex: 1; display: flex; flex-direction: column; align-items: center; height: 100%; justify-content: flex-end; }
+.bar-val { font-size: 0.68rem; font-weight: 700; color: var(--muted); margin-bottom: 4px; white-space: nowrap; }
+.bar { width: 100%; max-width: 38px; border-radius: 7px 7px 0 0;
+  background: linear-gradient(180deg, #8b5cf6, #6d28d9); transition: height 0.4s ease; min-height: 3px; }
+.bar-label { font-size: 0.72rem; color: var(--muted); margin-top: 8px; text-align: center; }
+
+/* แถบสถานะ */
+.status-bars { display: flex; flex-direction: column; gap: 12px; }
+.sb-row { display: grid; grid-template-columns: 92px 1fr 26px; align-items: center; gap: 10px; }
+.sb-label { font-size: 0.82rem; font-weight: 600; }
+.sb-track { background: #f1f5f9; border-radius: 999px; height: 12px; overflow: hidden; }
+.sb-fill { height: 100%; border-radius: 999px; min-width: 2px; transition: width 0.4s ease; }
+.sb-count { font-size: 0.85rem; font-weight: 800; text-align: right; }
+.f-pending { background: #f59e0b; }
+.f-paid { background: #3b82f6; }
+.f-shipped { background: #6366f1; }
+.f-completed { background: #22c55e; }
+.f-cancelled { background: #ef4444; }
+
+/* สินค้าใกล้หมด */
+.low-stock { display: flex; flex-direction: column; gap: 8px; }
+.ls-row { display: flex; justify-content: space-between; padding: 8px 12px; background: #f8fafc; border-radius: 8px; font-size: 0.9rem; }
+.ls-low { color: #d97706; font-weight: 800; }
+.ls-out { color: #dc2626; font-weight: 800; }
+
+@media (max-width: 640px) { .dash-grid { grid-template-columns: 1fr; } }

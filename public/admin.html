@@ -29,8 +29,9 @@
       <div class="admin-nav-inner">
         <span class="admin-logo">🛠️ ShopThai Admin</span>
         <nav class="tabs">
-          <button class="tab active" data-tab="products">สินค้า</button>
-          <button class="tab" data-tab="orders">คำสั่งซื้อ</button>
+          <button class="tab active" data-tab="dashboard">📊 แดชบอร์ด</button>
+          <button class="tab" data-tab="products">📦 สินค้า</button>
+          <button class="tab" data-tab="orders">🧾 คำสั่งซื้อ</button>
         </nav>
         <div class="admin-right">
           <a href="/" class="link-muted" target="_blank">เปิดหน้าร้าน ↗</a>
@@ -43,8 +44,26 @@
       <!-- สถิติ -->
       <section class="stats" id="stats"></section>
 
+      <!-- แท็บแดชบอร์ด -->
+      <section id="tab-dashboard" class="tab-panel">
+        <div class="dash-grid">
+          <div class="dash-card">
+            <h3>📈 ยอดขาย 7 วันล่าสุด</h3>
+            <div id="salesChart" class="chart"></div>
+          </div>
+          <div class="dash-card">
+            <h3>📦 สถานะคำสั่งซื้อ</h3>
+            <div id="statusChart" class="status-bars"></div>
+          </div>
+        </div>
+        <div class="dash-card" style="margin-top:16px">
+          <h3>⚠️ สินค้าใกล้หมด (เหลือ ≤ 5 ชิ้น)</h3>
+          <div id="lowStock" class="low-stock"></div>
+        </div>
+      </section>
+
       <!-- แท็บสินค้า -->
-      <section id="tab-products" class="tab-panel">
+      <section id="tab-products" class="tab-panel" hidden>
         <div class="panel-head">
           <h2>จัดการสินค้า</h2>
           <button id="newProductBtn" class="btn btn-primary">+ เพิ่มสินค้า</button>
